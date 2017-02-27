@@ -1,4 +1,4 @@
-# ENSF409 - Lab Exerecises
+# ENSF409 - Lab Exercises
 
 <ul>
 <li> Lab 1 - Introduction to Java </li>
