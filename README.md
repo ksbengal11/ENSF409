@@ -8,5 +8,5 @@
 <li> Lab 5 - Java Generics and Multi Threading </li>
 </ul>
 
-<p> Author: Karan Bengali, Email: karanbengali4@gmail.com </p>
-<p> Last update: February 26, 2017 </p>
+<p> <strong>Author:</strong> Karan Bengali, <strong>Email</strong>: karanbengali4@gmail.com </p>
+<p> <strong>Last update:</strong> February 26, 2017 </p>
