@@ -1,7 +1,7 @@
 # ENSF409 - Lab Exerecises
 
-<h5> Author: Karan Bengali </h5>
-<h5> Email: karanbengali4@gmail.com </h5>
+<p> Author: Karan Bengali </p>
+<p> Email: karanbengali4@gmail.com </p>
 
 <ul>
 <li> Lab 1 - Introduction to Java </li>
