@@ -2,6 +2,7 @@
 
 <p> Author: Karan Bengali </p>
 <p> Email: karanbengali4@gmail.com </p>
+<p> Last update: February 26, 2017 </p>
 
 <ul>
 <li> Lab 1 - Introduction to Java </li>
