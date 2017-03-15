@@ -1,5 +1,7 @@
 package inlab4;
 
+import java.io.PrintWriter;
+
 //STUDENTS SHOULD ADD CLASS COMMENT, METHOD COMMENTS, FIELD COMMENTS
 /**
 * Provides data fields and methods to create a Java data-type, representing a
@@ -77,17 +79,17 @@ public class Board implements Constants {
 	*	Display markings on board.
 	* Add hypens and spaces where necessary.
 	*/
-	public void display() {
-		displayColumnHeaders();
-		addHyphens();
+	public void display(PrintWriter outStream) {
+		displayColumnHeaders(outStream);
+		addHyphens(outStream);
 		for (int row = 0; row < 3; row++) {
-			addSpaces();
-			System.out.print("    row " + row + ' ');
+			addSpaces(outStream);
+			outStream.print("P    row " + row + ' ');
 			for (int col = 0; col < 3; col++)
-				System.out.print("|  " + getMark(row, col) + "  ");
-			System.out.println("|");
-			addSpaces();
-			addHyphens();
+				outStream.print("|  " + getMark(row, col) + "  ");
+			outStream.println("|");
+			addSpaces(outStream);
+			addHyphens(outStream);
 		}
 	}
 	/**
@@ -158,28 +160,28 @@ public class Board implements Constants {
 	/**
 	*	Display column headers on the board.
 	*/
-	void displayColumnHeaders() {
-		System.out.print("          ");
+	void displayColumnHeaders(PrintWriter outStream) {
+		outStream.print("P          ");
 		for (int j = 0; j < 3; j++)
-			System.out.print("|col " + j);
-		System.out.println();
+			outStream.print("|col " + j);
+		outStream.println();
 	}
 	/**
 	*	Add hyphens on the gameboard.
 	*/
-	void addHyphens() {
-		System.out.print("          ");
+	void addHyphens(PrintWriter outStream) {
+		outStream.print("P          ");
 		for (int j = 0; j < 3; j++)
-			System.out.print("+-----");
-		System.out.println("+");
+			outStream.print("+-----");
+		outStream.println("+");
 	}
 	/**
 	*	Add spaces on the gameboard.
 	*/
-	void addSpaces() {
-		System.out.print("          ");
+	void addSpaces(PrintWriter outStream) {
+		outStream.print("P          ");
 		for (int j = 0; j < 3; j++)
-			System.out.print("|     ");
-		System.out.println("|");
+			outStream.print("|     ");
+		outStream.println("|");
 	}
 }

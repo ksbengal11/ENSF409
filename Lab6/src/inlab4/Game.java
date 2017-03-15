@@ -21,7 +21,7 @@ public class Game implements Constants {
       theRef = r;
   		theRef.runTheGame();
   }
-	public static void main(String[] args) throws IOException {
+	/*public static void main(String[] args) throws IOException {
 		Referee theRef;
 		Player xPlayer, oPlayer;
 		BufferedReader stdin;
@@ -51,7 +51,7 @@ public class Game implements Constants {
 		theRef.setxPlayer(xPlayer);
 
     theGame.appointReferee(theRef);
-	}
+	}*/
 
 	/**
 	 * Creates the specified type of player indicated by the user.
@@ -63,23 +63,24 @@ public class Game implements Constants {
 	 * @return a newly created player
 	 * @throws IOException
 	 */
-	static public Player  create_player(String name, char mark, Board board,
-			BufferedReader stdin)throws IOException {
+	static public Player create_player(String name, char mark, Board board,
+			BufferedReader stdin, PrintWriter stdOut)throws IOException {
 		// Get the player type.
 		final int NUMBER_OF_TYPES = 4;
-		System.out.print ( "\nWhat type of player is " + name + "?\n");
-		System.out.print("  1: human\n" + "  2: Random Player\n"
-		+ "  3: Blocking Player\n" + "  4: Smart Player\n");
-		System.out.print( "Please enter a number in the range 1-" + NUMBER_OF_TYPES + ": ");
+		stdOut.println("P What type of player is " + name +"?");
+		stdOut.println("P 1. Human Player");
+		stdOut.println("P 2. Random Player");
+		stdOut.println("P 3. Blocking Player");
+		stdOut.println("P 4. Smart Player");
+		stdOut.println("I Please enter a number in the range 1-" + NUMBER_OF_TYPES + ":");
 		int player_type = 0;
 
 		String input;
-		stdin = new BufferedReader(new InputStreamReader(System.in));
 		input= stdin.readLine();
 		player_type = Integer.parseInt(input);
 		while (player_type < 1 || player_type > NUMBER_OF_TYPES) {
-			System.out.print( "Please try again.\n");
-			System.out.print ( "Enter a number in the range 1-" +NUMBER_OF_TYPES + ": ");
+			stdOut.print("I Please try again.\n");
+			stdOut.print ("I Enter a number in the range 1-" +NUMBER_OF_TYPES + ": ");
 			input= stdin.readLine();
 			player_type = Integer.parseInt(input);
 		}
@@ -88,27 +89,50 @@ public class Game implements Constants {
 		Player result = null;
 		switch(player_type) {
 			case 1:
-				result = new HumanPlayer(name, mark, board);
+				result = new HumanPlayer(name, mark, board, stdin, stdOut);
 				break;
 			case 2:
-				result = new RandomPlayer(name, mark, board);
+				result = new RandomPlayer(name, mark, board, stdin, stdOut);
 				break;
 			case 3:
-				result = new BlockingPlayer(name, mark, board);
+				result = new BlockingPlayer(name, mark, board, stdin, stdOut);
 				break;
 			case 4:
-				result = new SmartPlayer(name, mark, board);
+				result = new SmartPlayer(name, mark, board, stdin, stdOut);
 				break;
 			default:
-				System.out.print ( "\nDefault case in switch should not be reached.\n"
+				System.out.print ( "\nP Default case in switch should not be reached.\n"
 				+ "  Program terminated.\n");
 				System.exit(0);
 		}
 		return result;
 	}
-	public void start(BufferedReader socketIn, PrintWriter socketOut, BufferedReader socketIn2,
-			PrintWriter socketOut2) {
-		// TODO Auto-generated method stub
+	public void startGame(BufferedReader p1_socketIn, PrintWriter p1_socketOut, BufferedReader p2_socketIn, PrintWriter p2_socketOut) throws IOException {
+		Player xPlayer, oPlayer;
+		p1_socketOut.println("I Player \'X\', please enter your name.");
+		String name = p1_socketIn.readLine();
+		while(name == ""){
+			p1_socketOut.println("I Please try again");
+			name = p1_socketIn.readLine();
+		}
+		xPlayer = create_player(name, LETTER_X, theBoard, p1_socketIn, p1_socketOut);
 		
+		name = "";
+		p2_socketOut.println("I Player \'O\', please enter your name.");
+		name = p2_socketIn.readLine();
+		while(name == ""){
+			p1_socketOut.println("I Please try again");
+			name = p1_socketIn.readLine();
+		}
+		oPlayer = create_player(name, LETTER_O, theBoard, p2_socketIn, p2_socketOut);
+		
+		System.out.println("Players created, appointing referee");
+		theRef = new Referee();
+		theRef.setoPlayer(oPlayer);
+		theRef.setxPlayer(xPlayer);
+		theRef.setBoard(theBoard);
+		
+		theRef.runTheGame();
 	}
+	
 }

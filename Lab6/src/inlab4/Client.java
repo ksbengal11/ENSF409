@@ -26,6 +26,7 @@ public class Client {
     }
     public void communicate () {
         String line = "";
+        String response = "";
         try {
             while(line != "QUIT") {
                 line = socketIn.readLine();
@@ -37,13 +38,20 @@ public class Client {
                     		break;
                     	case "I": 
                     		System.out.println(line.substring(2, line.length()));
-                    		socketOutput.println(stdIn.readLine());
+                    		while(response == "") {
+                    			response = stdIn.readLine();
+                    		}
+                    		socketOutput.flush();
+                    		socketOutput.println(response);
+                    		//if(response != "") System.out.println("Name entered successfully");
+                    		//else System.out.println("Unsuccessful");
+                    		response = "";
                     		break;
                     	case "Q":
                     		line = "QUIT";
                     		break;
-                    	default:
-                    		System.out.println(line);
+                    	case "P":
+                    		System.out.println(line.substring(2, line.length()));
                     		break;
                 	}
                 } else {

@@ -23,45 +23,42 @@ public class Server implements Constants {
         
         Connection (Socket s, int new_player_id) throws IOException {
             aSock = s;
-            socketIn = new BufferedReader(new InputStreamReader(s.getInputStream()));
-            socketOut = new PrintWriter(s.getOutputStream(), true);
+            socketIn = new BufferedReader(new InputStreamReader(aSock.getInputStream()));
+            socketOut = new PrintWriter(aSock.getOutputStream(), true);
             player_id = new_player_id;
-        }
-        
-        public void closeConnection() throws IOException{
-        	System.out.printf("Player %d disconnected\n", player_id);
-        	socketIn.close();
-        	socketOut.close();
-        	if(player_id == 1) p1 = null;
-        	else p2 = null;
-        }
-        
+        }        
         public void run (){
             try {
-                String line = "R";
-                while (true){
-                	socketIn.readLine();
-                	if(line == null || line != "R") {
-                		closeConnection();
-                		break;
-                	}          	
+                String line = "";
+                do{
+                	line = socketIn.readLine();
+                	if(line == null) closeConnection(player_id);
                 	socketOut.println("R");
-                	if(player_id == 1){
-                        socketOut.println("Waiting for player 2...");
-                        socketOut.append("P");
-                	} else {
-                		System.out.println("Starting the game");
+                	if(player_id == 2) {
+                		System.out.println("Starting new game");
                 		Game newGame = new Game();
-                		newGame.start(p1.socketIn, p1.socketOut, socketIn, socketOut);
+                		newGame.startGame(p1.socketIn, p1.socketOut, p2.socketIn, p2.socketOut);
                 		break;
                 	}
-                }
+                }while(line == "R");
             }catch(IOException e){
-            	
+            	e.printStackTrace();
             }
         }
     }
-
+    public void closeConnection(int id) throws IOException{
+    	System.out.printf("Player %d disconnected\n", id);
+    	if(id == 1){
+        	p1.socketIn.close();
+        	p1.socketOut.close();
+        	p1 = null;
+    	}
+    	else{
+        	p2.socketIn.close();
+        	p2.socketOut.close();
+        	p2 = null;
+    	}
+    }   
     public Server () {
         try {
             serverSocket = new ServerSocket(9090);
@@ -70,11 +67,7 @@ public class Server implements Constants {
         	e.printStackTrace();
         }
     }
-    public static void main (String[] argv) {
-        Server server = new Server();
-        server.listen();
-    }
-    public void listen () {
+    public void communicate () {
         while (true) {
             try {
                 Socket serverConnect = serverSocket.accept();
@@ -90,21 +83,21 @@ public class Server implements Constants {
                     t.start();
                 } else {
                     try {
-                        PrintWriter reject = new PrintWriter(serverConnect.getOutputStream(), true);
-                        reject.println("Sorry, this server is full.");
                         serverConnect.close();
-                        reject.close();
                         System.out.println("Rejected a player");
                     } catch (IOException e) {
-                        System.err.println("Error rejecting connection");
-                        System.err.println(e.getStackTrace());
+                    	e.printStackTrace();
                     }
                 }
             } catch (IOException e) {
-                System.err.println("Error establishing new client");
-                System.err.println(e.getStackTrace());
+            	e.printStackTrace();
             }
         }
     }
+    public static void main (String[] argv) {
+        Server server = new Server();
+        server.communicate();
+    }
+
 }
 

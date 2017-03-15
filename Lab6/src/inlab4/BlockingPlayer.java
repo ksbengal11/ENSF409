@@ -1,4 +1,9 @@
 package inlab4;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 /**
 * Tick-tac-toe AI that blocks user if they are in a winning position
 * @version 1.0
@@ -12,15 +17,16 @@ public class BlockingPlayer extends RandomPlayer{
   * @param mark of the player
   * @param board game board
   */
-  public BlockingPlayer(String name, char mark, Board board){
-    super(name, mark, board);
+  public BlockingPlayer(String name, char mark, Board board, BufferedReader in, PrintWriter out){
+    super(name, mark, board, in, out);
   }
   /**
   * Determine if a player is in a winning position and block if necessary.
   * Otherwise, make a random move
+ * @throws IOException 
   */
   @Override
-  protected void makeMove(){
+  protected void makeMove() throws IOException{
     for(int row = 0; row < 3; row++){
       for(int col = 0; col < 3; col++){
         if(board.getMark(row,col) == SPACE_CHAR && testforBlocking(row,col)){

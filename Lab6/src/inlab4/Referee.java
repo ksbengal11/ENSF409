@@ -1,4 +1,5 @@
 package inlab4;
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -32,8 +33,9 @@ public class Referee {
   }
   /**
   * Function runTheGame will run the game. Player x will start first
+ * @throws IOException 
   */
-  public void runTheGame(){
+  public void runTheGame() throws IOException{
     xPlayer.setOponnet(oPlayer);
     oPlayer.setOponnet(xPlayer);
 
@@ -48,8 +50,11 @@ public class Referee {
   */
   public void setBoard(Board board){
     this.board = board;
-    System.out.println("Referee has started the game ...");
-    board.display();
+    //System.out.println("Referee has started the game ...");
+    xPlayer.stdOut.println("P Referee has started the game ...");
+    oPlayer.stdOut.println("P Referee has started the game ...");
+    board.display(xPlayer.stdOut);
+    board.display(oPlayer.stdOut);
   }
   /**
   * Function settoPlayer will initialize 'o' player and set 'xplayer' as its

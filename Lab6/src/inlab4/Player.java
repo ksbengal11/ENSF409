@@ -1,4 +1,7 @@
 package inlab4;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 /**
 * Provides data fields and methods to create a Java data-type, representing a
@@ -28,6 +31,9 @@ abstract class Player implements Constants{
   * Public variable mark specifying the selected mark of the player
   */
   protected char mark;
+  protected BufferedReader stdIn;
+  protected PrintWriter stdOut;
+  
   /**
   * Default constructor of class Player. Assigns player name and associated
   * mark
@@ -35,10 +41,12 @@ abstract class Player implements Constants{
   * @param mark specified mark of the player
   * @param boad specified game board
   */
-  public Player (String name, char mark, Board b) {
+  public Player (String name, char mark, Board b, BufferedReader in, PrintWriter out) {
     this.name = name;
     this.mark = mark;
     this.board = b;
+    this.stdIn = in;
+    this.stdOut = out;
   }
   /**
   * @return name of the player
@@ -61,9 +69,9 @@ abstract class Player implements Constants{
   /**
   * Initiate Game
   */
-  abstract protected void play();
+  abstract protected void play() throws IOException;
   /**
   * Prompt player to make a move
   */
-  abstract protected void makeMove();
+  abstract protected void makeMove() throws IOException;
 }

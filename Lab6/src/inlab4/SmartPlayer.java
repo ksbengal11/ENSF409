@@ -1,4 +1,9 @@
 package inlab4;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 /**
  *	This class provides a tic-tac-toe AI that does the following:
  *		1. Check if it can win
@@ -14,13 +19,14 @@ class SmartPlayer extends BlockingPlayer {
 	 * @param mark - Player mark
 	 * @param board - Gameboard
 	 */
-	public SmartPlayer(String name, char mark, Board board){
-		super(name, mark, board);
+	public SmartPlayer(String name, char mark, Board board, BufferedReader in, PrintWriter out){
+		super(name, mark, board, in, out);
 	}
 	/**
 	 * Check if we can win the game, if not block player
+	 * @throws IOException 
 	 */
-	protected void makeMove(){
+	protected void makeMove() throws IOException{
 		for(int row = 0; row < 3; row++){
 			for(int col = 0; col < 3; col++){
 				if(board.getMark(row, col) == SPACE_CHAR && testForWinning(row,col)){
