@@ -1,0 +1,64 @@
+/**
+ * 
+ */
+package inlab4;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
+
+public class Client {
+    private PrintWriter socketOutput;
+    private Socket sock;
+    private BufferedReader socketIn;
+    private BufferedReader stdIn;
+    public Client (String serverName, int portNumber) {
+        try {
+            sock = new Socket(serverName, portNumber);
+            socketIn = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+            socketOutput = new PrintWriter(sock.getOutputStream(), true);
+            stdIn = new BufferedReader(new InputStreamReader(System.in));
+            socketOutput.println("R");
+        } catch (IOException e) {
+        	e.printStackTrace();
+        }
+    }
+    public void communicate () {
+        String line = "";
+        try {
+            while(line != "QUIT") {
+                line = socketIn.readLine();
+                if (line != null){
+                	switch (line.substring(0, 1)) {
+                    	case "R": 
+                    		System.out.println("Server on localhost:9090 ready and connected...");
+                    		System.out.println("WELCOME TO THE GAME");
+                    		break;
+                    	case "I": 
+                    		System.out.println(line.substring(2, line.length()));
+                    		socketOutput.println(stdIn.readLine());
+                    		break;
+                    	case "Q":
+                    		line = "QUIT";
+                    		break;
+                    	default:
+                    		System.out.println(line);
+                    		break;
+                	}
+                } else {
+                    line = "QUIT";
+                }
+            }
+            socketIn.close();
+            socketOutput.close();
+            stdIn.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void main (String[] argv) {
+        Client aClient = new Client("localhost", 9090);
+        aClient.communicate();
+    }
+}
