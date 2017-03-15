@@ -32,11 +32,11 @@ public class RNGThread implements Runnable{
 	 */
 	public void run(){
 		try {
-			/*int i = 0;
+			int i = 0;
 			while (rn_array[i] != 0) i++;
 			rn_array[i] = r.nextInt(100)+1;
-			*/
-			switch (index){
+			
+			/*switch (index){
 			case 0:
 				rn1 = r.nextInt(100)+1;
 				break;
@@ -52,7 +52,7 @@ public class RNGThread implements Runnable{
 			case 4:
 				rn5 = r.nextInt(100)+1;
 				break;
-			}
+			}*/
 			Thread.sleep(100);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -78,14 +78,14 @@ public class RNGThread implements Runnable{
 				e.printStackTrace();
 			}
 		}
-		System.out.println(rn1 + " " + rn2 + " " + rn3 + " " + rn4 + " " + rn5 + " " );
+		/*System.out.println(rn1 + " " + rn2 + " " + rn3 + " " + rn4 + " " + rn5 + " " );
 		int total = rn1 + rn2 + rn3 + rn4 + rn5;
-		/*int total = 0;
+		System.out.println("The sum of our array is : " + total);*/
+		int total = 0;
 		for (int i = 0; i < 5; i++){
 			System.out.print(rn_array[i] + " ");
 			total += rn_array[i];
-		}*/
-		//System.out.println("\nThe sum of our array is : " + total);	
-		System.out.println("The sum of our array is : " + total);	
+		}
+		System.out.println("\nThe sum of our array is : " + total);	
 	}
 }
