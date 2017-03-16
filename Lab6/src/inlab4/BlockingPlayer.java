@@ -16,8 +16,11 @@ public class BlockingPlayer extends RandomPlayer{
   * @param name of the player
   * @param mark of the player
   * @param board game board
+  * @param in input communication stream
+  * @param out ouput communication stream
   */
-  public BlockingPlayer(String name, char mark, Board board, BufferedReader in, PrintWriter out){
+  public BlockingPlayer(String name, char mark, Board board, 
+		  BufferedReader in, PrintWriter out){
     super(name, mark, board, in, out);
   }
   /**
@@ -29,7 +32,8 @@ public class BlockingPlayer extends RandomPlayer{
   protected void makeMove() throws IOException{
     for(int row = 0; row < 3; row++){
       for(int col = 0; col < 3; col++){
-        if(board.getMark(row,col) == SPACE_CHAR && testforBlocking(row,col)){
+        if(board.getMark(row,col) == SPACE_CHAR && 
+        		testforBlocking(row,col)){
           board.addMark(row, col, mark);
           return;
         }
@@ -71,16 +75,22 @@ public class BlockingPlayer extends RandomPlayer{
 
     switch(row){
       case 0:
-        if(col != 0 && board.getMark(2,0) == opponent_mark && board.getMark(1,1) == opponent_mark) return true;
-        else if (board.getMark(2,2) == opponent_mark && board.getMark(1,1) == opponent_mark) return true;
+        if(col != 0 && board.getMark(2,0) == opponent_mark && 
+        board.getMark(1,1) == opponent_mark) return true;
+        else if (board.getMark(2,2) == opponent_mark && 
+        		board.getMark(1,1) == opponent_mark) return true;
         break;
       case 1:
-        if(board.getMark(0,0) == opponent_mark && board.getMark(2,2) == opponent_mark) return true;
-        else if (board.getMark(0,2) == opponent_mark && board.getMark(2,0) == opponent_mark) return true;
+        if(board.getMark(0,0) == opponent_mark && 
+        board.getMark(2,2) == opponent_mark) return true;
+        else if (board.getMark(0,2) == opponent_mark && 
+        		board.getMark(2,0) == opponent_mark) return true;
         break;
       case 2:
-        if(col != 0 && board.getMark(0,0) == opponent_mark && board.getMark(1,1) == opponent_mark) return true;
-        else if (board.getMark(0,2) == opponent_mark && board.getMark(1,1) == opponent_mark) return true;
+        if(col != 0 && board.getMark(0,0) == opponent_mark && 
+        board.getMark(1,1) == opponent_mark) return true;
+        else if (board.getMark(0,2) == opponent_mark && 
+        		board.getMark(1,1) == opponent_mark) return true;
         break;
     }
     return false;

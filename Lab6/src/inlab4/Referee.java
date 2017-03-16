@@ -9,8 +9,8 @@ import java.util.Scanner;
 * players, and start the game.
 *
 * @author Karan Bengali
-* @version 1
-* @since February 2, 2017
+* @version 2.0
+* @since March 15, 2017
 */
 public class Referee {
   /**
@@ -50,7 +50,6 @@ public class Referee {
   */
   public void setBoard(Board board){
     this.board = board;
-    //System.out.println("Referee has started the game ...");
     xPlayer.stdOut.println("P Referee has started the game ...");
     oPlayer.stdOut.println("P Referee has started the game ...");
     board.display(xPlayer.stdOut);

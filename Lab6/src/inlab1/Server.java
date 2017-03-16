@@ -12,6 +12,7 @@ public class Server {
 	Socket aSocket;
 	ServerSocket serverSocket;
 	BufferedReader in;
+	
 	public Server() throws IOException {
 		serverSocket = new ServerSocket(8099);
 		System.out.println("Server is running ...");
@@ -19,6 +20,7 @@ public class Server {
 		in = new BufferedReader(new InputStreamReader(aSocket.getInputStream()));
 		out = new PrintWriter((aSocket.getOutputStream()), true);
 	}
+	
 	public boolean isPalindrome(String s){
 		int n = s.length();
 		for(int i = 0; i < (n/2); ++i){
@@ -29,36 +31,23 @@ public class Server {
 		return true;
 	}
 	
-	public void communicate(){
-		String line = null;
-		while (true){
-			try{
-				line = in.readLine();
-				if(line.toUpperCase().equals("QUIT")) {
-					line = "Good Bye!";
-					out.println(line);
-					break;
-				}
-				if(isPalindrome(line.toLowerCase())){
-					line += " is a palindrome";
-					out.println(line);
-				}
-				else {
-					line += " is not a palindrome";
-					out.println(line);
-				}
-			}catch (IOException e){
-				e.printStackTrace();
+	public void communicate() throws IOException{
+		StringBuffer read = null;
+		while(true){
+			read = new StringBuffer(in.readLine());
+			if(read.toString().equals("QUIT")) {
+				break;
+			}
+			if(isPalindrome(read.toString())) {
+				out.println(read.toString() + " is a palindrome.");
+			}
+			else {
+				out.println(read.toString() + " is not a palindrome.");
 			}
 		}
-		try{
-			in.close();
-			out.close();
-			serverSocket.close();
-			aSocket.close();
-		}catch(IOException e) {
-			System.out.println("Unexpected exception: " + e.getMessage());
-		}
+		out.println("Closing connection now, Goodbye!");
+		in.close();
+		out.close();
 	}
 	
 	public static void main (String [] args) throws IOException {

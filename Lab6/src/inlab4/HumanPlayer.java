@@ -4,10 +4,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 /**
-* Provides methods to gather from input inorder to play a game of tick-tac-toe
+* Provides methods to gather from input inorder to play a game 
+* of tick-tac-toe
 * @author Karan Bengali
-* @version 1.0
-* @since February 2017
+* @version 2.0
+* @since March 15, 2017
 */
 public class HumanPlayer extends Player{
   /**
@@ -15,26 +16,40 @@ public class HumanPlayer extends Player{
   * @param name player name
   * @param mark of the player
   * @param board game board
+  * @param in input communication stream
+  * @param out output communication stream
   */
-  public HumanPlayer(String name, char mark, Board board, BufferedReader in, PrintWriter out){
+  public HumanPlayer(String name, char mark, Board board, 
+		  BufferedReader in, PrintWriter out){
     super(name, mark, board, in, out);
   }
-  protected void play() throws IOException{
+/**
+ * Run the game. x Player will make the first move and then the 'o'
+ * player will make their move. Continue until one wins or the board
+ * is full
+ */
+protected void play() throws IOException{
     Player p = this;
     while (true){
       if(board.isFull()){
-        p.stdOut.println("P Nobody is the winner! Thanks for playing");
-        p.opponent.stdOut.println("P Nobody is the winner! Thanks for playing");
+        p.stdOut.println("PrintNobody is the winner! Thanks "
+        		+ "for playing");
+        p.opponent.stdOut.println("PrintNobody is the winner! "
+        		+ "Thanks for playing");
         break;
       }
       else if (board.xWins()){
-        p.stdOut.println("P Player x is the winner! Thanks for playing");
-        p.opponent.stdOut.println("P Player x is the winner! Thanks for playing");
+        p.stdOut.println("PrintPlayer x is the winner! Thanks "
+        		+ "for playing");
+        p.opponent.stdOut.println("P Player x is the winner! "
+        		+ "Thanks for playing");
         break;
       }
       else if (board.oWins()){
-        p.stdOut.println("P Player o is the winner! Thanks for playing");
-        p.opponent.stdOut.println("P Player o is the winner! Thanks for playing");
+        p.stdOut.println("PrintPlayer o is the winner! Thanks "
+        		+ "for playing");
+        p.opponent.stdOut.println("PrintPlayer o is the winner! "
+        		+ "Thanks for playing");
         break;
       }
       p.makeMove();
@@ -67,21 +82,26 @@ public class HumanPlayer extends Player{
     String input = "" ;
     Player currentPlayer = this;
     while(true){
-    	stdOut.printf("I %s, what row should your next %c be placed in?\n", currentPlayer.name, currentPlayer.mark);
+    	stdOut.printf("Input%s, what row should your next %c"
+    			+ " be placed in?\n", currentPlayer.name, 
+    			currentPlayer.mark);
     	input = stdIn.readLine();
     	row = Integer.parseInt(input);
-    	stdOut.printf("I %s, what col should your next %c be placed in?\n", currentPlayer.name, currentPlayer.mark);
+    	stdOut.printf("Input%s, what col should your next %c"
+    			+ " be placed in?\n", currentPlayer.name, 
+    			currentPlayer.mark);
     	input = stdIn.readLine();
     	col = Integer.parseInt(input);
 
     	if(row < 0 || row > 2 || col < 0 || col > 2){
-    		stdOut.println("P Index out of range, please try again");
+    		stdOut.println("PrintIndex out of range, please try again");
     		break;
     	}else if(board.getMark(row,col) == SPACE_CHAR){
     		board.addMark(row,col,mark);
     		break;
     	}else {
-    		stdOut.println("P Coordinate (" + row + "," + col + ") occupied. Please try again");
+    		stdOut.println("PrintCoordinate (" + row + "," 
+    	+ col + ") occupied. Please try again");
     	}
     }
   }

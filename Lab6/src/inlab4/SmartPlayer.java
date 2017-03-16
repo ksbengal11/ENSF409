@@ -9,8 +9,8 @@ import java.io.PrintWriter;
  *		1. Check if it can win
  *		2. Check whether it can block opponent
  *	@author Karan Bengali
- *	@version 1.0
- *	@since February 2017
+ *	@version 2.0
+ *	@since March 15, 2017
  */
 class SmartPlayer extends BlockingPlayer {
 	/**
@@ -18,8 +18,11 @@ class SmartPlayer extends BlockingPlayer {
 	 * @param name - Player name
 	 * @param mark - Player mark
 	 * @param board - Gameboard
+	 * @param in input communication stream
+	 * @param out output communication stream
 	 */
-	public SmartPlayer(String name, char mark, Board board, BufferedReader in, PrintWriter out){
+	public SmartPlayer(String name, char mark, Board board, 
+			BufferedReader in, PrintWriter out){
 		super(name, mark, board, in, out);
 	}
 	/**
@@ -29,7 +32,8 @@ class SmartPlayer extends BlockingPlayer {
 	protected void makeMove() throws IOException{
 		for(int row = 0; row < 3; row++){
 			for(int col = 0; col < 3; col++){
-				if(board.getMark(row, col) == SPACE_CHAR && testForWinning(row,col)){
+				if(board.getMark(row, col) == SPACE_CHAR 
+						&& testForWinning(row,col)){
 					board.addMark(row, col, mark);
 					return;
 				}
@@ -56,7 +60,7 @@ class SmartPlayer extends BlockingPlayer {
 		// Check columns
 		is_winning = true;
         for (int i = 0; i < 3; i++) {
-            if ((i != row) && (board.getMark(i, col) != mark)) {
+            if ((i != row) && (board.getMark(i,col) != mark)){
             	is_winning = false;
                 break;
             }
@@ -69,25 +73,29 @@ class SmartPlayer extends BlockingPlayer {
 
         switch (row) {
         case 0:
-            if (col != 0 && board.getMark(2, 0) == mark && board.getMark(1, 1) == mark)
+            if (col != 0 && board.getMark(2, 0) == 
+            mark && board.getMark(1, 1) == mark)
                 return true;
-            else if (board.getMark(2, 2) == mark && board.getMark(1, 1) == mark)
+            else if (board.getMark(2, 2) == mark &&
+            		board.getMark(1, 1) == mark)
                 return true;
             break;
         case 1:
-            if ((board.getMark(0, 0) == mark && board.getMark(2, 2) == mark) ||
-                (board.getMark(0, 2) == mark && board.getMark(2, 0) == mark))
+            if ((board.getMark(0, 0) == mark &&
+            board.getMark(2, 2) == mark) ||
+                (board.getMark(0, 2) == mark &&
+                board.getMark(2, 0) == mark))
                 return true;
             break;
         case 2:
-            if (col != 0 && board.getMark(0, 0) == mark && board.getMark(1, 1) == mark)
+            if (col != 0 && board.getMark(0, 0) == 
+            mark && board.getMark(1, 1) == mark)
                 return true;
-            else if (board.getMark(0, 2) == mark && board.getMark(1, 1) == mark)
+            else if (board.getMark(0, 2) == mark &&
+            		board.getMark(1, 1) == mark)
                 return true;
             break;
         } 
-        
-		
 		return false;
 	}
 }

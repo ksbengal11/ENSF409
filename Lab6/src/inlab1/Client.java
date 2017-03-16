@@ -28,22 +28,16 @@ public class Client {
 
 		String line = "";
 		String response = "";
-		boolean running = true;
-		while (running) {
-			try {
-				System.out.println("please enter a word: ");
+		while(!line.equals("QUIT")){
+			try{
+				System.out.println("Please enter a word: ");
 				line = stdIn.readLine();
-				if (!line.equals("QUIT")){
-					System.out.println(line);
-					socketOut.println(line);
-					response = socketIn.readLine();
-					System.out.println(response);	
-				}else{
-					running = false;
-				}
-				
-			} catch (IOException e) {
-				System.out.println("Sending error: " + e.getMessage());
+				System.out.println(line);
+				socketOut.println(line);
+				response = socketIn.readLine();
+				System.out.println(response);
+			}catch(IOException e){
+				System.out.println("Communication error " + e.getMessage());
 			}
 		}
 		try {
