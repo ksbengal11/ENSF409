@@ -1,6 +1,3 @@
-/**
- * 
- */
 package inlab4;
 
 import java.io.IOException;
@@ -84,7 +81,7 @@ public class Server implements Constants {
                 do{
                 	line = socketIn.readLine();
                 	if(line == null) closeConnection(player_id);
-                	socketOut.println("R");
+                	socketOut.println("Ready");
                 	if(player_id == 2) {
                 		System.out.println("Starting new game");
                 		Game newGame = new Game();
@@ -150,7 +147,6 @@ public class Server implements Constants {
                 } else {
                     try {
                         serverConnect.close();
-                        System.out.println("Rejected a player");
                     } catch (IOException e) {
                     	e.printStackTrace();
                     }

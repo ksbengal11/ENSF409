@@ -62,8 +62,9 @@ public class Client {
     public void communicate () {
         String line = "";
         String response = "";
+        boolean running = true;
         try {
-            while(line != "QUIT") {
+            while(running) {
                 line = socketIn.readLine();
                 if (line != null){
                 	switch (line.substring(0, 1)) {
@@ -81,14 +82,14 @@ public class Client {
                     		response = "";
                     		break;
                     	case "Q":
-                    		line = "QUIT";
+                    		running = false;
                     		break;
                     	case "P":
                     		System.out.println(line.substring(5, line.length()));
                     		break;
                 	}
                 } else {
-                    line = "QUIT";
+                	running = false;
                 }
             }
             socketIn.close();
