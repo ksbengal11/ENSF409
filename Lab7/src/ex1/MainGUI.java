@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ex1;
 
 import java.awt.BorderLayout;
@@ -21,6 +18,8 @@ import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
 /**
+ * Class MainGUI displays windows
+ *
  * @author Karan Bengali
  * @version 1.0
  * @since March 17, 2017
