@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ex1;
 
 import java.awt.BorderLayout;
