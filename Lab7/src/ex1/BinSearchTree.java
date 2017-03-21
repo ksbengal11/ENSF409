@@ -6,9 +6,6 @@ import javax.swing.JOptionPane;
  * The following class called BinSearchTree creates an empty 
  * tree, and allows the user of the class to insert new nodes into the tree.  
  */
-
- 
-
 class BinSearchTree {
 	
 	Node root;
@@ -58,7 +55,6 @@ class BinSearchTree {
 	/** 
 	 * Returns true if tree is empty 
 	 */
-	
 	public boolean empty() {
 		return (root == null);
 	}
@@ -66,7 +62,6 @@ class BinSearchTree {
 	/** 
 	 * removes all nodes 
 	 */
-	
 	public void destroy() {
 //		splice();
 		root = null;
@@ -129,7 +124,7 @@ class BinSearchTree {
 	}
     
 	/**
-	 * function tha recursively display the data. 
+	 * function that recursively display the data. 
 	 * @param cur - current node
 	 * @param out - the output stream to print the node information
 	 * @throws IOException
