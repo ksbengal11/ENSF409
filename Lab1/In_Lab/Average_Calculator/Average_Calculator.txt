@@ -1,0 +1,2 @@
+The 4 numbers are : 2.4 2.6 1.8 1.2 
+And their average is : 2.0
