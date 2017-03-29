@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Screen margins -->
+    <dimen name="activity_vertical_margin">40dp</dimen>
+    <dimen name="activity_horizontal_margin">40dp</dimen>
+    <dimen name="button_width">30pt</dimen>
+    <dimen name="button_equal_width">40pt</dimen>
+    <dimen name="button_height">30pt</dimen>
+    <dimen name="dialPad_text_size">30sp</dimen>
+    <dimen name="button_text_size">30dp</dimen>
+</resources>
