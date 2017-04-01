@@ -19,44 +19,38 @@ public class CalculatorActivity extends Activity {
      * valueTwo - second value of the arithmetic operation
      */
     float valueOne, valueTwo;
-
+    /**
+     * Used for computing a chain of operations
+     */
     char oldOperation = '+';
     char newOperation;
-
     /**
-     * Prevents users from pressing the operations, equals, and dot button twice
-     * operationFlag - True if any of the operation buttons have been pressed
-     * equalFlag - True if equal button has been pressed
-     * dotFlag - True if dot button has been pressed
+     * operationFlag    - True if the user presses the equal button
+     * equalFlag        - True if equal button has been pressed
+     * dotFlag          - True if dot button has been pressed
      */
     boolean operationFlag, equalFlag, dotFlag, negativeFlag;
-
     /**
      * Object calculator which computes the result of our arithmetic operation
      */
     Calculator calc = new Calculator();
-
     /**
      * Stores user entry
      */
     String displayText;
-
     /**
-     * Displays arithmetic expression and error messages
+     * Displays arithmetic expression output and error messages
      */
     TextView message;
-
     /**
      * Displays user entry and computed result
      */
     EditText edt1;
-
     /**
      * Buttons for dial pad and arithmetic operations
      */
     Button btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9,
            btnDOT, btnADD,btnSUB,btnMUL, btnDIV, btnEqual, btnClear,btnNeg;
-
     /**
      * Display the calculator gui. Ties button, text view, and edit text
      * variables to their respective ids.
@@ -96,10 +90,8 @@ public class CalculatorActivity extends Activity {
 
         addListeners();
     }
-
     /**
-     * Clears the display area and sets arithmetic operation
-     * variables to zero
+     * Clears the display area and sets arithmetic operation variables to zero
      */
     public void reset(){
         edt1.setText("");
@@ -108,7 +100,6 @@ public class CalculatorActivity extends Activity {
         oldOperation = '+';
         operationFlag = true;
     }
-
     /**
      * Displays error message if an invalid activity is caught
      */
@@ -116,11 +107,9 @@ public class CalculatorActivity extends Activity {
         displayText = "Invalid input "+ edt1.getText()+""+". Renter numbers";
         message.setText(displayText);
     }
-
     /**
-     * Parses the display area for the first value of the arithmetic
-     * operation.
-     * Ignores all invalid entry is detected
+     * Parses the display area for the first value of the arithmetic operation.
+     * Ignores invalid entries.
      */
     public void displayOperation(){
         String inputMessage = edt1.getText() + "";
@@ -171,7 +160,7 @@ public class CalculatorActivity extends Activity {
     }
 
     /**
-     * Button activity listeners. Displays user input and computation result.
+     * Button activity listeners. Displays user input and result.
      */
     public void addListeners(){
         btn0.setOnClickListener(new View.OnClickListener(){
