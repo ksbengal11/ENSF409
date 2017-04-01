@@ -220,7 +220,18 @@
         android:layout_below="@id/button0"
         android:layout_alignRight="@id/buttonDiv"
         android:layout_alignEnd="@id/buttonDiv"
-        android:layout_alignLeft="@id/buttonDot"
-        android:layout_alignStart="@id/buttonDot"/>
+        android:layout_alignLeft="@id/button0"
+        android:layout_alignStart="@id/button0"/>
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:textSize="@dimen/dialPad_text_size"
+        android:text="@string/btnNeg"
+        android:id="@+id/buttonNeg"
+        android:layout_below="@id/buttonDot"
+        android:layout_toLeftOf="@id/button2"
+        android:layout_toStartOf="@id/button2"/>
 
 </RelativeLayout>

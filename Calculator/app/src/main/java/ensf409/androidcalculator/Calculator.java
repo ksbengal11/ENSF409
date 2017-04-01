@@ -27,6 +27,7 @@ public class Calculator implements  AritmeticOperation{
                 result = numOne*numTwo;
                 break;
             case DIVISION:
+                if(numTwo == 0) return 0;
                 result = numOne/numTwo;
                 break;
             default:

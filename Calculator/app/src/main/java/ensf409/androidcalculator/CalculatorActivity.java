@@ -20,10 +20,8 @@ public class CalculatorActivity extends Activity {
      */
     float valueOne, valueTwo;
 
-    /**
-     * Variable indicating the type of arithmetic operation (i.e + - / *)
-     */
-    char operation;
+    char oldOperation = '+';
+    char newOperation;
 
     /**
      * Prevents users from pressing the operations, equals, and dot button twice
@@ -31,7 +29,7 @@ public class CalculatorActivity extends Activity {
      * equalFlag - True if equal button has been pressed
      * dotFlag - True if dot button has been pressed
      */
-    boolean operationFlag, equalFlag, dotFlag;
+    boolean operationFlag, equalFlag, dotFlag, negativeFlag;
 
     /**
      * Object calculator which computes the result of our arithmetic operation
@@ -57,7 +55,7 @@ public class CalculatorActivity extends Activity {
      * Buttons for dial pad and arithmetic operations
      */
     Button btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9,
-           btnDOT, btnADD,btnSUB,btnMUL, btnDIV, btnEqual, btnClear;
+           btnDOT, btnADD,btnSUB,btnMUL, btnDIV, btnEqual, btnClear,btnNeg;
 
     /**
      * Display the calculator gui. Ties button, text view, and edit text
@@ -70,7 +68,8 @@ public class CalculatorActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activty_calculator);
 
-        operationFlag = false;
+        negativeFlag = false;
+        operationFlag = true;
         equalFlag = false;
         dotFlag = false;
 
@@ -93,6 +92,7 @@ public class CalculatorActivity extends Activity {
         btnEqual    = (Button) findViewById(R.id.buttonEqual);
         btnDOT      = (Button) findViewById(R.id.buttonDot);
         btnClear    = (Button) findViewById(R.id.buttonClear);
+        btnNeg      = (Button) findViewById(R.id.buttonNeg);
 
         addListeners();
     }
@@ -105,7 +105,8 @@ public class CalculatorActivity extends Activity {
         edt1.setText("");
         valueOne = 0;
         valueTwo = 0;
-        operationFlag = false;
+        oldOperation = '+';
+        operationFlag = true;
     }
 
     /**
@@ -119,25 +120,39 @@ public class CalculatorActivity extends Activity {
     /**
      * Parses the display area for the first value of the arithmetic
      * operation.
-     * Prints and error if an invalid entry is detected
+     * Ignores all invalid entry is detected
      */
     public void displayOperation(){
+        String inputMessage = edt1.getText() + "";
+        dotFlag = false;
         if(!operationFlag){
-            String inputMessage = edt1.getText() + "";
-            dotFlag = false;
-            if(isFloat(inputMessage)){
-                valueOne = Float.parseFloat(edt1.getText() + "");
-                operationFlag = true;
-                edt1.setText("");
-                message.setText(inputMessage + " " + String.valueOf(operation));
-                equalFlag = false;
-            }else{
-                errorMessage();
-                reset();
-            }
+            valueOne += 0;
+            edt1.setText("");
+            operationFlag = true;
+            equalFlag = false;
+            oldOperation = newOperation;
         }else{
-            errorMessage();
-            reset();
+            if(isFloat(inputMessage)){
+                valueTwo = Float.parseFloat(edt1.getText() + "");
+                if (valueTwo == 0 && oldOperation == '/'){
+                    edt1.setText("-E-");
+                    message.setText("Cannot divide by zero");
+                    valueOne = 0;
+                    valueTwo = 0;
+                    oldOperation = '+';
+                    equalFlag = false;
+                }else{
+                    valueOne = calc.calculateResult(valueOne, valueTwo, oldOperation);
+                    oldOperation = newOperation;
+                    valueTwo = 0;
+                    edt1.setText("");
+                    equalFlag = false;
+                    message.setText(String.valueOf(valueOne));
+                }
+            }else{
+                valueOne += 0;
+            }
+            oldOperation = newOperation;
         }
     }
 
@@ -236,9 +251,6 @@ public class CalculatorActivity extends Activity {
                     displayText = edt1.getText()+".";
                     edt1.setText(displayText);
                     dotFlag = true;
-                }else{
-                    message.setText("Invalid input " + edt1.getText()+ "" +". Renter numbers");
-                    edt1.setText("");
                 }
             }
         });
@@ -248,37 +260,38 @@ public class CalculatorActivity extends Activity {
                 edt1.setText("");
                 valueOne = 0;
                 valueTwo = 0;
-                operationFlag = false;
                 equalFlag = false;
                 dotFlag = false;
                 message.setText("");
+                oldOperation = '+';
+                operationFlag = true;
             }
         });
         btnADD.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                operation = '+';
+                newOperation = '+';
                 displayOperation();
             }
         });
         btnMUL.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                operation = '*';
+                newOperation = '*';
                 displayOperation();
             }
         });
         btnDIV.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                operation = '/';
+                newOperation = '/';
                 displayOperation();
             }
         });
         btnSUB.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                operation = '-';
+                newOperation = '-';
                 displayOperation();
             }
         });
@@ -286,23 +299,46 @@ public class CalculatorActivity extends Activity {
             @Override
             public void onClick(View v){
                 if(!equalFlag){
-                    operationFlag = false;
                     String inputMessage = edt1.getText() + "";
                     displayText = " " + inputMessage;
                     message.setText(displayText);
                     if(isFloat(inputMessage)){
                         valueTwo = Float.parseFloat(inputMessage);
-                        valueOne = calc.calculateResult(valueOne, valueTwo, operation);
-                        edt1.setText(String.valueOf(valueOne));
-                        message.setText(String.valueOf(valueOne));
-                        equalFlag = true;
-                    }else{
-                        errorMessage();
-                        reset();
+                        if(valueTwo == 0 && oldOperation =='/'){
+                            edt1.setText("-E-");
+                            message.setText("Cannot divide by zero");
+                            valueOne = 0;
+                            valueTwo = 0;
+                            oldOperation = '+';
+                            equalFlag = true;
+                            operationFlag = false;
+                            oldOperation = newOperation;
+                        }else{
+                            valueOne = calc.calculateResult(valueOne, valueTwo, oldOperation);
+                            edt1.setText(String.valueOf(valueOne));
+                            message.setText(String.valueOf(valueOne));
+                            equalFlag = true;
+                            operationFlag = false;
+                            oldOperation = newOperation;
+                        }
                     }
                 }else{
                     errorMessage();
                     reset();
+                }
+            }
+        });
+        btnNeg.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                if(!negativeFlag){
+                    edt1.setText(String.valueOf(Float.parseFloat(edt1.getText() + "")*-1));
+                    negativeFlag = true;
+                }else{
+                    valueOne = valueOne*-1;
+                    edt1.setText(String.valueOf(valueOne));
+                    message.setText(String.valueOf(valueOne));
+                    negativeFlag = false;
                 }
             }
         });

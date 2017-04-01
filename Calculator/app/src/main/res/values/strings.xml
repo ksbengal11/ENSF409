@@ -18,4 +18,5 @@
     <string name="btnDiv">/</string>
     <string name="btnMul">*</string>
     <string name="btnEqual">=</string>
+    <string name="btnNeg">-/+</string>
 </resources>
