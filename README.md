@@ -10,5 +10,5 @@
 <li> Lab 7 - Event Handling, JDBC </li>
 </ul>
 
-<p> <strong>Author:</strong> Karan Bengali, <strong>Email</strong>: karanbengali4@gmail.com </p>
+<p> <strong>Author:</strong> Karan Bengali
 <p> <strong>Last update:</strong> April 12, 2017 </p>
